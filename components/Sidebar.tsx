@@ -1,3 +1,42 @@
+import React from 'react'
+
+export default function Sidebar() {
+  return (
+    <>
+    <nav>
+        <div>
+            Logo
+        </div>
+
+        <ul>
+            <SidebarLink Icon={HomeIcon} text="home" />
+            <SidebarLink Icon={HomeIcon} text="home" />
+            <SidebarLink Icon={HomeIcon} text="home" />
+            <SidebarLink Icon={HomeIcon} text="home" />
+            <SidebarLink Icon={HomeIcon} text="home" />
+            <SidebarLink Icon={HomeIcon} text="home" />
+            <SidebarLink Icon={HomeIcon} text="home" />
+        </ul>
+
+        <div> user info</div>
+    </nav>
+      
+    </>
+  )
+}
+
+//npm install @heroicons/react@2.1.3
+function SidebarLink({text, Icon}) {
+    return (
+        <>
+        <li>
+            <Icon className="h-7 " />
+            {text}
+        </li>
+        </>
+    )
+}
+
 
 // //step 2
 // import React from 'react'
@@ -19,7 +58,7 @@
 //                 <SidebarLink Icon={HomeIcon} text="Home" />
 //                 <SidebarLink Icon={HomeIcon} text="Home" />
 //                 <SidebarLink Icon={HomeIcon} text="Home" />
-//                 {/* npm intall @heroicons/react/24/outline */}
+//                 {/* npm intall @heroicons/react@2.1.3 */}
 //             </ul>
 
 //             <div>

@@ -17,3 +17,13 @@ export default function Home() {
     </>
   );
 }
+
+// <div className=" text-blue
+//   min-h-screen
+//   max-w-[1400px]
+//   mx-auto
+//   border-2 border-black
+
+// ">
+//   <span>hit</span>
+// </div>
