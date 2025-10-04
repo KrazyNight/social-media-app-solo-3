@@ -1,4 +1,15 @@
 import React from 'react'
+import {
+    BellIcon,
+    BookmarkIcon,
+    EllipsisHorizontalCircleIcon,
+    HashtagIcon,
+    HomeIcon,
+    InboxIcon,
+    UserIcon,
+
+
+} from "@heroicons/react/24/outline"
 
 export default function Sidebar() {
   return (
@@ -9,30 +20,33 @@ export default function Sidebar() {
         </div>
 
         <ul>
-            <SidebarLink Icon={HomeIcon} text="home" />
-            <SidebarLink Icon={HomeIcon} text="home" />
-            <SidebarLink Icon={HomeIcon} text="home" />
-            <SidebarLink Icon={HomeIcon} text="home" />
-            <SidebarLink Icon={HomeIcon} text="home" />
-            <SidebarLink Icon={HomeIcon} text="home" />
-            <SidebarLink Icon={HomeIcon} text="home" />
+            <SidebarLink Icon={HomeIcon} text="Home" />
+            <SidebarLink Icon={HashtagIcon} text="Explore" />
+            <SidebarLink Icon={BellIcon} text="Notifications" />
+            <SidebarLink Icon={InboxIcon} text="Messages" />
+            <SidebarLink Icon={BookmarkIcon} text="Bookmarks" />
+            <SidebarLink Icon={UserIcon} text="Profile" />
+            <SidebarLink Icon={EllipsisHorizontalCircleIcon} text="More" />
+            {/* npm install @heroicons/react@2.1.3 */}
         </ul>
 
-        <div> user info</div>
+        <div>
+            user Info
+        </div>
     </nav>
       
     </>
   )
 }
 
-//npm install @heroicons/react@2.1.3
-function SidebarLink({text, Icon}) {
+
+
+function SidebarLink({ text, Icon }) {
     return (
         <>
-        <li>
-            <Icon className="h-7 " />
-            {text}
-        </li>
+        <Icon className="h-7" />
+        {text}
+        
         </>
     )
 }
