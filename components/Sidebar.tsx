@@ -1,25 +1,32 @@
-import React from 'react'
+import React from "react";
 import {
-    BellIcon,
-    BookmarkIcon,
-    EllipsisHorizontalCircleIcon,
-    HashtagIcon,
-    HomeIcon,
-    InboxIcon,
-    UserIcon,
-
-
-} from "@heroicons/react/24/outline"
+  BellIcon,
+  BookmarkIcon,
+  EllipsisHorizontalCircleIcon,
+  HashtagIcon,
+  HomeIcon,
+  InboxIcon,
+  UserIcon,
+} from "@heroicons/react/24/outline";
+import Image from "next/image";
 
 export default function Sidebar() {
   return (
     <>
-    <nav>
-        <div>
-            Logo
-        </div>
+      <nav className=" h-screen
+      hidden sm:flex flex-col sticky top-0 p-3 xl:ml-20 ">
+        <div className="relative h-full  ">
 
-        <ul>
+            <div className="py-3 ">
+            <Image
+                src={"/assets/busybee-logo2.png"}
+                width={42}
+                height={42}
+                alt="Logo"
+            />
+            </div>
+
+            <ul>
             <SidebarLink Icon={HomeIcon} text="Home" />
             <SidebarLink Icon={HashtagIcon} text="Explore" />
             <SidebarLink Icon={BellIcon} text="Notifications" />
@@ -28,27 +35,46 @@ export default function Sidebar() {
             <SidebarLink Icon={UserIcon} text="Profile" />
             <SidebarLink Icon={EllipsisHorizontalCircleIcon} text="More" />
             {/* npm install @heroicons/react@2.1.3 */}
-        </ul>
 
-        <div>
-            user Info
+            <button className="hidden xl:block
+             bg-[#f4af01] w-[200px] h-[52px]
+            rounded-full text-white font-medium cursor-pointer shadow-md mt-2
+            ">
+                Bumble
+            </button>
+            </ul>
+
+            <div className="absolute bottom-0  ">user Info</div>
         </div>
-    </nav>
-      
+
+
+
+      </nav>
     </>
-  )
+  );
+}
+
+interface SidebarLinkProps {
+  text: string;
+  Icon: React.ForwardRefExoticComponent<
+    Omit<React.SVGProps<SVGSVGElement>, "ref"> & {
+      title?: string;
+      titleId?: string;
+    } & React.RefAttributes<SVGSVGElement>
+  >;
 }
 
 
 
-function SidebarLink({ text, Icon }) {
-    return (
-        <>
+function SidebarLink({ text, Icon }: SidebarLinkProps) {
+  return (
+    <>
+      <li className="flex items-center text-xl mb-6 space-x-3 p-3 ">
         <Icon className="h-7" />
-        {text}
-        
-        </>
-    )
+        <span className="hidden md:block">{text}</span>
+      </li>
+    </>
+  );
 }
 
 
@@ -93,8 +119,6 @@ function SidebarLink({ text, Icon }) {
 //         </>
 //     )
 // }
-
-
 
 //step 1
 // import React from 'react'
