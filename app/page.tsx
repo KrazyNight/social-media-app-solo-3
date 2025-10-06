@@ -11,7 +11,6 @@ export default function Home() {
     mx-auto
     border-2
     border-black
-
     ">
 
       <Sidebar />
@@ -20,6 +19,7 @@ export default function Home() {
       {/* <PostFeed /> 
       <Widgets /> */}
     </div>
+
     </>
   );
 }
