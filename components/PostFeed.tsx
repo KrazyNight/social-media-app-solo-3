@@ -1,5 +1,6 @@
 import React from 'react'
 import PostInput from './PostInput'
+import Post from './Post'
 
 export default function PostFeed() {
   return (
@@ -21,6 +22,7 @@ export default function PostFeed() {
       </div>
 
       <PostInput />
+      <Post />
     </div>
     
     </>
