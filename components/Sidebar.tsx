@@ -10,7 +10,7 @@ export default function Sidebar() {
     sm:flex flex-col 
     sticky top-0 
     p-3
-    
+    xl:ml-20
     '>
       <div className='relative h-full  '>
 

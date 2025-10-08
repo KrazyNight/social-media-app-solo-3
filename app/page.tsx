@@ -1,4 +1,6 @@
+import PostFeed from "@/components/PostFeed";
 import Sidebar from "@/components/Sidebar";
+import Widgets from "@/components/Widgets";
 import Image from "next/image";
 
 export default function Home() {
@@ -11,12 +13,15 @@ export default function Home() {
     mx-auto
     border-2
     border-black
+    flex
     ">
 
       <Sidebar />
+      <PostFeed />
+      <Widgets />
 
 
-      {/* <PostFeed /> 
+      {/*
       <Widgets /> */}
     </div>
 
