@@ -21,7 +21,7 @@ export default function PostInput() {
             placeholder="What's happening!?"
             />
 
-            <div className='flex justify-between mt-2'>
+            <div className='flex justify-between pt-5'>
                 <div className='flex space-x-2'>
                     <PhotoIcon className='h-5 w-5 text-[#f4af01] ' />
                     <ChartBarIcon className='h-5 w-5 text-[#f4af01] ' />

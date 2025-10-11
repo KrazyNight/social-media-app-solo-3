@@ -11,6 +11,7 @@ export default function Sidebar() {
     sticky top-0 
     p-3
     xl:ml-20
+    xl:mr-10
     '>
       <div className='relative h-full  '>
 

@@ -14,10 +14,11 @@ export default function Home() {
     border-2
     border-black
     flex
+    justify-center
     ">
 
-      {/* <Sidebar />
-      <PostFeed /> */}
+      <Sidebar />
+      <PostFeed />
       <Widgets />
 
 
