@@ -16,8 +16,8 @@ export default function Home() {
     flex
     ">
 
-      <Sidebar />
-      <PostFeed />
+      {/* <Sidebar />
+      <PostFeed /> */}
       <Widgets />
 
 
