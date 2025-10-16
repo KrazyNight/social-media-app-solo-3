@@ -1,9 +1,80 @@
-import React from 'react'
+import React from 'react';
+import { BellIcon, BookmarkIcon, EllipsisHorizontalCircleIcon, HashtagIcon, HomeIcon, HomeModernIcon, InboxIcon, UserIcon } from '@heroicons/react/24/outline';
+import Image from 'next/image';
 
 export default function Sidebar() {
   return (
     <>
-      
+    <nav className=' 
+    hidden
+    sm:flex flex-col
+    h-screen p-3 sticky top-0
+    xl:ml-20
+    xl:mr-10 
+    
+    '>
+      <div className='relative h-full flex flex-col '>
+
+        <div className='py-3'>
+          <Image 
+          src={"/assets/busybee-logo2.png"}
+          width={44}
+          height={44}
+          alt='Logo'
+          className='w-11 h-11 '
+          />
+        </div>
+
+        <ul>
+          <SidebarLink Icon={HomeIcon} text="Home" />
+          <SidebarLink Icon={HashtagIcon} text="Explore " />
+          <SidebarLink Icon={BellIcon} text="Notifications " />
+          <SidebarLink Icon={InboxIcon} text="Messages" />
+          <SidebarLink Icon={BookmarkIcon } text="Bookmarks " />
+          <SidebarLink Icon={UserIcon } text="Profile" />
+          <SidebarLink Icon={EllipsisHorizontalCircleIcon } text="More " />
+        </ul>
+        <button className=' hidden lg:block
+        w-[200px] h-[52px]
+        bg-[#f4af01] text-white
+        rounded-full 
+        py-3 mt-2
+        shadow-lg
+        transition
+        cursor-pointer
+        ' >
+          Button
+        </button>
+
+        <div className='absolute bottom-0'>
+          User Info
+        </div>
+      </div>
+
+    </nav>
+    </>
+  )
+}
+
+
+interface SidebarLinkProps {
+  text: string;
+  Icon: React.ForwardRefExoticComponent<Omit<React.SVGProps<SVGSVGElement>, "ref"> & {
+    title?: string;
+    titleId?: string;
+} & React.RefAttributes<SVGSVGElement>>
+
+}
+
+
+function SidebarLink({ text, Icon }: SidebarLinkProps) {
+  return (
+    <>
+    <li className='flex items-center text-xl space-x-3 pl-3 mb-6 '>
+      <Icon className='h-7 w-7 ' />
+      {/* npm install @heroicons/react@2.1.3 */}
+      <span className='hidden lg:block '>{text}</span>
+    </li>
     </>
   )
 }

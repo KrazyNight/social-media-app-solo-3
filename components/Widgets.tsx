@@ -3,7 +3,8 @@ import React from 'react'
 export default function Widgets() {
   return (
     <>
-    <div>
+    <div className='hidden lg:block'>
+      Wedgets
 
     </div>
     </>
