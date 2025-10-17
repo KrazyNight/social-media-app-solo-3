@@ -1,15 +1,122 @@
+import { ArrowUpTrayIcon, ChartBarIcon, ChatBubbleLeftEllipsisIcon, ChatBubbleOvalLeftEllipsisIcon, HeartIcon } from '@heroicons/react/24/outline'
+import Image from 'next/image'
 import React from 'react'
 
 export default function Post() {
   return (
     <>
-    <div>
+    <div className='border-b-2'>
+      <PostHeader />
+      <div className='flex 
+      ml-16 p-3 space-x-16
+      '>
 
-    </div>   
+
+
+        <div className='relative '>
+          <ChatBubbleOvalLeftEllipsisIcon className='
+          w-5 h-5  cursor-pointer
+          hover:text-[#f4af01] transition 
+          '/>
+          <span className='absolute text-xs top-0 -right-3 '>
+            2
+          </span>
+        </div>
+
+        <div className='relative '>
+          <HeartIcon className='
+          w-5 h-5  cursor-pointer
+          hover:text-pink-500 transition 
+          '/>
+          <span className='absolute text-xs top-0 -right-3 '>
+            2
+          </span>
+        </div>
+
+        <div className='relative '>
+          <ChartBarIcon className='
+          w-5 h-5  cursor-not-allowed
+          hover:text-[red] transition 
+          '/>
+        </div>
+
+        <div className='relative '>
+          <ArrowUpTrayIcon className='
+          w-5 h-5  cursor-not-allowed
+          hover:text-[red] transition 
+          '/>
+        </div>
+        
+
+
+
+
+
+
+
+      </div>
+
+
+
+
+
+    </div>
+
+
     </>
   )
 }
 
+
+export function PostHeader() {
+  return (
+    <>
+    <div className='flex p-3 space-x-6 '>
+      <Image
+      src={"/assets/profile-pic.png"}
+      width={44}
+      height={44}
+      alt='Profile-Pic'
+      className='w-11 h-11 '
+      />
+
+      <div className='flex flex-col space-y-2 text-[15px]'>
+
+        <div className='flex space-x-3 text-[#707e89] '>
+          <span className='text-black font-bold
+          inline-block
+          whitespace-nowrap overflow-hidden text-ellipsis
+          max-w-[60px]
+          min-[400px]:max-w-[100px]
+          min-[500px]:max-w-[140px]
+          sm:max-w-[160px]
+
+
+
+          '>
+            Guest: eghu
+          </span>
+          <span className='
+
+          inline-block
+          whitespace-nowrap overflow-hidden text-ellipsis
+          max-w-[60px]
+          min-[400px]:max-w-[100px]
+          min-[500px]:max-w-[140px]
+          sm:max-w-[160px]
+          '>
+            Username
+          </span>
+          <span> · </span>
+          <span> a day ago </span>
+        </div>
+        <span> Text </span>
+      </div>
+    </div>
+    
+    </>
+  )
+}
 // // Final
 // import { ArrowUpTrayIcon, ChartBarIcon, ChatBubbleOvalLeftEllipsisIcon, HeartIcon } from '@heroicons/react/24/outline'
 // import Image from 'next/image'
