@@ -12,6 +12,7 @@ export default function Widgets() {
       p-3
       w-[400px]
       flex flex-col space-y-4
+      pl-10
       '>
 
         <div className='flex
@@ -19,11 +20,12 @@ export default function Widgets() {
         rounded-full space-x-3
         items-center
         h-[40px]
+        pl-5
 
         '>
           <MagnifyingGlassIcon className='
           w-[20px] h-[20px]
-          ml-4
+          
           ' />
           <input type="text" 
           placeholder='Search Busy Bee'
@@ -36,7 +38,7 @@ export default function Widgets() {
         p-3
         rounded-lg 
         '>
-          <h1 className='text-black font-bold text-xl mb-2'>What's Happening ?</h1>
+          <h1 className='text-black font-bold text-xl p-3 mb-4'>What's Happening ?</h1>
 
 
 
@@ -94,7 +96,7 @@ export default function Widgets() {
         
         <div className='bg-gray-100
         p-3
-        rounded-lg 
+        rounded-xl 
         '>
                   <h1 className='text-black font-bold text-xl mb-2'> Who to Follow ?</h1>
 
