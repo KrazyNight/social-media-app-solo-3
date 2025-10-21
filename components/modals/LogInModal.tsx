@@ -1,8 +1,10 @@
 "use client"
+import { auth } from "@/firebase";
 import { closeLogInModal, closeSignUpModal, openLogInModal, openSignUpModal } from "@/redux/slices/modalSlices";
 import { AppDispatch, RootState } from "@/redux/store";
 import { EyeIcon, EyeSlashIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Modal } from "@mui/material";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -12,6 +14,16 @@ export default function LogInModal() {
   const dispatch: AppDispatch = useDispatch();
 
   const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  async function handleLogIn() {
+    await signInWithEmailAndPassword(auth, email, password)
+  }
+
+  async function handleGuestLogIn() {
+    await signInWithEmailAndPassword(auth, "guest@gmail.com", "12345678");
+  }
 
   return (
     <>
@@ -77,6 +89,9 @@ export default function LogInModal() {
               "
               placeholder="Email"
               type="email"
+
+              onChange={(event) => setEmail(event.target.value)}
+              value={email}
               />
 
 
@@ -102,6 +117,9 @@ export default function LogInModal() {
                 "
                 placeholder="Password"
                 type={showPassword ? "text" : "password"}
+
+                onChange={(event) => setPassword(event.target.value)}
+                value={password}
                 />
 
                 <div className="w-7 h-7 text-gray-600  "
@@ -144,7 +162,9 @@ export default function LogInModal() {
             hover:shadow-xl transition
             mb-5
 
-            ">
+            "
+            onClick={() => handleLogIn()}
+            >
               Log In 
             </button>
             <span className="mb-5 mx-auto text-md">
@@ -156,7 +176,9 @@ export default function LogInModal() {
             shadow-md
             hover:shadow-xl transition
             mb-5
-            ">
+            "
+            onClick={() => handleGuestLogIn()}
+            >
               Log In as Guest
             </button>
           </div>

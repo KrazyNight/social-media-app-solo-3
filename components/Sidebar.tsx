@@ -1,6 +1,7 @@
 import React from 'react';
 import { BellIcon, BookmarkIcon, EllipsisHorizontalCircleIcon, HashtagIcon, HomeIcon, HomeModernIcon, InboxIcon, UserIcon } from '@heroicons/react/24/outline';
 import Image from 'next/image';
+import SidebarUserInfo from './SidebarUserInfo';
 
 export default function Sidebar() {
   return (
@@ -33,22 +34,21 @@ export default function Sidebar() {
           <SidebarLink Icon={BookmarkIcon } text="Bookmarks " />
           <SidebarLink Icon={UserIcon } text="Profile" />
           <SidebarLink Icon={EllipsisHorizontalCircleIcon } text="More " />
-        </ul>
-        <button className=' hidden lg:block
-        w-[200px] h-[52px]
-        bg-[#f4af01] text-white
-        rounded-full 
-        py-3 mt-2
-        shadow-lg
-        transition
-        cursor-pointer
-        ' >
-          Button
-        </button>
 
-        <div className='absolute bottom-0'>
-          User Info
-        </div>
+          <button className=' hidden lg:block
+          w-[200px] h-[52px]
+          bg-[#f4af01] text-white
+          rounded-full 
+          py-3 mt-2
+          shadow-lg
+          transition
+          cursor-pointer
+          ' >
+            Button
+          </button>
+        </ul>
+
+        <SidebarUserInfo />
       </div>
 
     </nav>

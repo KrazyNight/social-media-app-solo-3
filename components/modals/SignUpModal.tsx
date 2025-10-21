@@ -3,8 +3,13 @@ import { closeSignUpModal, openSignUpModal } from "@/redux/slices/modalSlices";
 import { AppDispatch, RootState } from "@/redux/store";
 import { EyeIcon, EyeSlashIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Modal } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { auth } from "@/firebase";
+import { sign } from "crypto";
+import { signInUser } from "@/redux/slices/userSlices";
+import { current } from "@reduxjs/toolkit";
 
 
 export default function SignUpModal() {
@@ -12,6 +17,61 @@ export default function SignUpModal() {
   const dispatch: AppDispatch = useDispatch();
 
   const [showPassword, setShowPassword] = useState(false);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  async function handleSignUp() {
+
+    const userCredentials = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password,
+    );
+    //Redux
+    await updateProfile(userCredentials.user, {
+      displayName: name
+    });
+
+    dispatch(signInUser({
+      name: userCredentials.user.displayName,
+      username: userCredentials.user.email!.split("@")[0],
+      email: userCredentials.user.email,
+      uid: userCredentials.user.uid,
+
+
+    }))
+
+  }
+
+
+  async function handleGuestLogIn() {
+      await signInWithEmailAndPassword(auth, "guest@gmail.com", "12345678");
+    }
+
+
+    
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      if (!currentUser) return
+      console.log(currentUser)
+      
+      //Handle Redux
+      dispatch(signInUser({
+        name: currentUser.displayName,
+        username: currentUser.email!.split("@")[0],
+        email: currentUser.email,
+        uid: currentUser.uid, 
+      }))
+
+    })
+    return unsubscribe
+  }, [])
+
+
+
+
+
 
   return (
     <>
@@ -74,6 +134,9 @@ export default function SignUpModal() {
               "
               placeholder="Name"
               type="text"
+              
+              onChange={(event) => setName(event.target.value)}
+              value={name}
               />
 
 
@@ -87,6 +150,9 @@ export default function SignUpModal() {
               "
               placeholder="Email"
               type="email"
+
+              onChange={(event) => setEmail(event.target.value)}
+              value={email}
               />
 
               <div className="
@@ -106,6 +172,9 @@ export default function SignUpModal() {
                 "
                 placeholder="Password"
                 type={showPassword ? "text" : "password"}
+
+                onChange={(event) => setPassword(event.target.value)}
+                value={password}
                 /> 
 
                 <div className="
@@ -148,7 +217,12 @@ export default function SignUpModal() {
             hover:shadow-xl transition
             mb-5
 
-            ">
+            "
+            onClick={() => 
+            
+              handleSignUp()
+            }
+            >
               Sign in
             </button>
             <span className="mb-5 mx-auto text-md">
@@ -160,7 +234,9 @@ export default function SignUpModal() {
             shadow-md
             hover:shadow-xl transition
             mb-5
-            ">
+            "
+            onClick={() => handleGuestLogIn()}
+            >
               Log in as Guest
             </button>
           </div>
