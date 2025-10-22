@@ -7,9 +7,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "@/firebase";
-import { sign } from "crypto";
 import { signInUser } from "@/redux/slices/userSlices";
-import { current } from "@reduxjs/toolkit";
 
 
 export default function SignUpModal() {
@@ -223,7 +221,7 @@ export default function SignUpModal() {
               handleSignUp()
             }
             >
-              Sign in
+              Sign up
             </button>
             <span className="mb-5 mx-auto text-md">
               Or

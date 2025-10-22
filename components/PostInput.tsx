@@ -1,8 +1,35 @@
+"use client"
+import { db } from '@/firebase';
+import { RootState } from '@/redux/store';
 import { CalendarIcon, ChartBarIcon, FaceSmileIcon, MapPinIcon, PhotoIcon } from '@heroicons/react/24/outline'
+import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
 import Image from 'next/image'
-import React from 'react'
+import React, { useState } from 'react'
+import { useSelector } from 'react-redux';
 
 export default function PostInput() {
+  //Inside the texrarea, connect with code.
+  //identidfy user, 
+  //the post 
+  const [text, setText] = useState("");
+  const user = useSelector((state: RootState) => state.user);
+
+
+  async function sendPost() {
+    await addDoc(collection(db, "posts"), {
+      name: user.name,
+      username: user.username,
+      timestamp: serverTimestamp(),
+      text: text,
+      likes: [],
+      commnets: [],
+    })
+    setText("")
+  };
+
+
+
+
   return (
     <>
     <div className='flex p-3 space-x-6 border-b-2 '>
@@ -23,6 +50,10 @@ export default function PostInput() {
         border-b-2
         '
         placeholder="What's happening!? "
+
+        onChange={(event) => setText(event.target.value)}
+        value={text}
+
         />
 
         <div className='flex justify-between pt-5'>
@@ -37,8 +68,12 @@ export default function PostInput() {
           bg-[#f4af01] text-white text-sm
           w-[80px] h-[36px]
           rounded-full cursor-pointer
+          disabled:bg-opacity-60
 
-          '>
+          '
+          disabled={!text}
+          onClick={() => sendPost()}
+          >
             Bumble
           </button>
         </div>

@@ -1,12 +1,28 @@
+"use client"
+import { RootState } from '@/redux/store'
 import { ArrowUpTrayIcon, ChartBarIcon, ChatBubbleLeftEllipsisIcon, ChatBubbleOvalLeftEllipsisIcon, HeartIcon } from '@heroicons/react/24/outline'
+import { DocumentData, Timestamp } from 'firebase/firestore'
 import Image from 'next/image'
 import React from 'react'
+import { useSelector } from 'react-redux';
+import Moment  from 'react-moment';
 
-export default function Post() {
+interface PostProps {
+  data: DocumentData
+}
+export default function Post({ data }: PostProps) {
+  const user = useSelector((state: RootState) => state.user);
+
   return (
     <>
     <div className='border-b-2'>
-      <PostHeader />
+
+      <PostHeader 
+      name={data.name}
+      username={data.username}
+      timestamp={data.timestamp}
+      text={data.text}
+      />
       <div className='flex 
       ml-16 p-3 space-x-16
       '>
@@ -46,29 +62,20 @@ export default function Post() {
           hover:text-[red] transition 
           '/>
         </div>
-        
-
-
-
-
-
-
-
       </div>
-
-
-
-
-
     </div>
-
-
     </>
   )
 }
 
+interface PostHeaderProps {
+  name: string;
+  username: string;
+  timestamp?: Timestamp;
+  text: string;
+};
 
-export function PostHeader() {
+export function PostHeader({ name, username, timestamp, text, }:PostHeaderProps) {
   return (
     <>
     <div className='flex p-3 space-x-6 '>
@@ -94,7 +101,7 @@ export function PostHeader() {
 
 
           '>
-            Guest: eghu
+            {name}
           </span>
           <span className='
 
@@ -105,12 +112,18 @@ export function PostHeader() {
           min-[500px]:max-w-[140px]
           sm:max-w-[160px]
           '>
-            Username
+            @{username}
           </span>
           <span> · </span>
-          <span> a day ago </span>
+
+          { timestamp &&
+            <Moment fromNow>
+              {timestamp?.toDate()} 
+            </Moment>
+          }
+
         </div>
-        <span> Text </span>
+        <span> {text} </span>
       </div>
     </div>
     
