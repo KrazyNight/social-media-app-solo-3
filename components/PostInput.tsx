@@ -7,10 +7,11 @@ import Image from 'next/image'
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux';
 
-export default function PostInput() {
-  //Inside the texrarea, connect with code.
-  //identidfy user, 
-  //the post 
+interface PostInputProps {
+  insideModal?: boolean
+}
+
+export default function PostInput({ insideModal }: PostInputProps ) {
   const [text, setText] = useState("");
   const user = useSelector((state: RootState) => state.user);
 
@@ -27,6 +28,9 @@ export default function PostInput() {
     setText("")
   };
 
+  async function sendComment() {
+  }
+
 
 
 
@@ -34,11 +38,11 @@ export default function PostInput() {
     <>
     <div className='flex p-3 space-x-6 border-b-2 '>
       <Image
-      src={"/assets/busybee-logo2.png"}
+      src={insideModal ? "/assets/profile-pic.png " : "/assets/busybee-logo2.png"}
       width={44}
       height={44}
-      alt='Logo'
-      className='w-11 h-11'
+      alt={insideModal ? "Profile-Pic" : "Logo"}
+      className='w-11 h-11 z-10 '
 
       />
 
@@ -49,7 +53,7 @@ export default function PostInput() {
         resize-none outline-none
         border-b-2
         '
-        placeholder="What's happening!? "
+        placeholder={insideModal ? "Send your reply ": "What's happening!? "}
 
         onChange={(event) => setText(event.target.value)}
         value={text}
@@ -72,7 +76,7 @@ export default function PostInput() {
 
           '
           disabled={!text}
-          onClick={() => sendPost()}
+          onClick={() => insideModal ? sendComment() : sendPost()}
           >
             Bumble
           </button>

@@ -43,6 +43,7 @@ export default function PostFeed() {
         posts.map((post) => <Post
         key={post.id}
         data={post.data()}
+        id={post.id}
         />)
       }
 

@@ -1,28 +1,35 @@
 "use client"
-import { RootState } from '@/redux/store'
+import { AppDispatch, RootState } from '@/redux/store'
 import { ArrowUpTrayIcon, ChartBarIcon, ChatBubbleLeftEllipsisIcon, ChatBubbleOvalLeftEllipsisIcon, HeartIcon } from '@heroicons/react/24/outline'
 import { DocumentData, Timestamp } from 'firebase/firestore'
 import Image from 'next/image'
 import React from 'react'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Moment  from 'react-moment';
+import { openCommentModal, setCommentDetails } from '@/redux/slices/modalSlices'
+import Link from 'next/link'
 
 interface PostProps {
   data: DocumentData
+  id: string
 }
-export default function Post({ data }: PostProps) {
+export default function Post({ data, id  }: PostProps) {
   const user = useSelector((state: RootState) => state.user);
+  const dispatch: AppDispatch = useDispatch();
 
   return (
     <>
     <div className='border-b-2'>
+    
 
-      <PostHeader 
-      name={data.name}
-      username={data.username}
-      timestamp={data.timestamp}
-      text={data.text}
-      />
+        <PostHeader 
+        name={data.name}
+        username={data.username}
+        timestamp={data.timestamp}
+        text={data.text}
+        />
+    
+      
       <div className='flex 
       ml-16 p-3 space-x-16
       '>
@@ -33,7 +40,20 @@ export default function Post({ data }: PostProps) {
           <ChatBubbleOvalLeftEllipsisIcon className='
           w-5 h-5  cursor-pointer
           hover:text-[#f4af01] transition 
-          '/>
+          '
+          onClick={() => {
+
+            dispatch(setCommentDetails({
+              name: data.name,
+              username: data.username,
+              id: id,
+              text: data.text
+            }))
+
+            dispatch(openCommentModal())
+          }
+          }
+          />
           <span className='absolute text-xs top-0 -right-3 '>
             2
           </span>
@@ -73,9 +93,10 @@ interface PostHeaderProps {
   username: string;
   timestamp?: Timestamp;
   text: string;
+  replyTo?: string;
 };
 
-export function PostHeader({ name, username, timestamp, text, }:PostHeaderProps) {
+export function PostHeader({ name, username, timestamp, text, replyTo }:PostHeaderProps) {
   return (
     <>
     <div className='flex p-3 space-x-6 '>
@@ -84,7 +105,7 @@ export function PostHeader({ name, username, timestamp, text, }:PostHeaderProps)
       width={44}
       height={44}
       alt='Profile-Pic'
-      className='w-11 h-11 '
+      className='w-11 h-11 z-10 bg-white '
       />
 
       <div className='flex flex-col space-y-2 text-[15px]'>
@@ -124,6 +145,17 @@ export function PostHeader({ name, username, timestamp, text, }:PostHeaderProps)
 
         </div>
         <span> {text} </span>
+
+        {
+          replyTo && (
+
+            <span className='text-[15px] text-[#707e89]'>
+              Replying to <span className='text-[#f4af01]'>@{replyTo}</span>
+            </span>
+          )
+        }
+
+
       </div>
     </div>
     

@@ -1,3 +1,4 @@
+import CommentModal from "@/components/modals/CommentModal";
 import PostFeed from "@/components/PostFeed";
 import Sidebar from "@/components/Sidebar";
 import SignUpPrompt from "@/components/SignUpPrompt";
@@ -17,7 +18,8 @@ export default function Home(){
     max-w-[1400px]
     mx-auto
     border-2 border-black
-    flex
+    flex 
+    justify-center
 
 
     ">
@@ -27,6 +29,7 @@ export default function Home(){
       
     </div>
     <SignUpPrompt />
+    <CommentModal />
     </>
   )
 }
