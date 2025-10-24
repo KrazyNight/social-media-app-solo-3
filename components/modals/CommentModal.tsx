@@ -24,7 +24,8 @@ export default function CommentModal() {
     >
         <div className='
         bg-white
-        w-[600px] h-fit
+        w-full h-full
+        sm:w-[600px] sm:h-fit
         sm:rounded-xl outline-none
         relative    
 
@@ -34,7 +35,7 @@ export default function CommentModal() {
             onClick={() => dispatch(closeCommentModal())}
           />
           <div className='
-          pt-5 pb-10 px-5 
+          pt-5 pb-10 px-0 sm:px-5  
           flex flex-col
           
           '>
@@ -53,7 +54,8 @@ export default function CommentModal() {
             <div className='
             absolute
             w-0.5 h-32 bg-gray-300
-            top-20 left-[52px] z-0
+            top-20 sm:left-[52px] left-[32px]
+            z-0
             '>
 
             </div>

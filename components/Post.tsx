@@ -21,13 +21,16 @@ export default function Post({ data, id  }: PostProps) {
     <>
     <div className='border-b-2'>
     
+        <Link href={"/" + id}>
 
-        <PostHeader 
-        name={data.name}
-        username={data.username}
-        timestamp={data.timestamp}
-        text={data.text}
-        />
+          <PostHeader 
+          name={data.name}
+          username={data.username}
+          timestamp={data.timestamp}
+          text={data.text}
+          />
+        </Link> 
+
     
       
       <div className='flex 
@@ -130,17 +133,22 @@ export function PostHeader({ name, username, timestamp, text, replyTo }:PostHead
           whitespace-nowrap overflow-hidden text-ellipsis
           max-w-[60px]
           min-[400px]:max-w-[100px]
-          min-[500px]:max-w-[140px]
+          min-[500px]:max-w-[140px]+
           sm:max-w-[160px]
           '>
             @{username}
           </span>
-          <span> · </span>
 
           { timestamp &&
+          <>
+            <span> · </span>
+          
             <Moment fromNow>
               {timestamp?.toDate()} 
             </Moment>
+          </>
+          
+
           }
 
         </div>

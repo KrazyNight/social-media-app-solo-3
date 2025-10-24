@@ -1,11 +1,12 @@
 "use client"
 import { db } from '@/firebase';
-import { RootState } from '@/redux/store';
+import { closeCommentModal, setCommentDetails } from '@/redux/slices/modalSlices';
+import { AppDispatch, RootState } from '@/redux/store';
 import { CalendarIcon, ChartBarIcon, FaceSmileIcon, MapPinIcon, PhotoIcon } from '@heroicons/react/24/outline'
-import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
+import { addDoc, arrayUnion, collection, doc, serverTimestamp, updateDoc } from 'firebase/firestore';
 import Image from 'next/image'
 import React, { useState } from 'react'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 interface PostInputProps {
   insideModal?: boolean
@@ -14,7 +15,8 @@ interface PostInputProps {
 export default function PostInput({ insideModal }: PostInputProps ) {
   const [text, setText] = useState("");
   const user = useSelector((state: RootState) => state.user);
-
+  const commentDetails = useSelector((state: RootState) => state.modals.commentPostDetails)
+  const dispatch: AppDispatch = useDispatch();
 
   async function sendPost() {
     await addDoc(collection(db, "posts"), {
@@ -29,6 +31,18 @@ export default function PostInput({ insideModal }: PostInputProps ) {
   };
 
   async function sendComment() {
+    const postRef = doc(db, "posts", commentDetails.id )
+
+    await updateDoc(postRef, {
+      comments: arrayUnion({
+        name: user.name,
+        username: user.username,
+        text: text, 
+
+      })
+    })
+    setText("");
+    dispatch(closeCommentModal());
   }
 
 
