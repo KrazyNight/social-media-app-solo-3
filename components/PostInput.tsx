@@ -25,7 +25,7 @@ export default function PostInput({ insideModal }: PostInputProps ) {
       timestamp: serverTimestamp(),
       text: text,
       likes: [],
-      commnets: [],
+      comments: [],
     })
     setText("")
   };

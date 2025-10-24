@@ -1,4 +1,5 @@
 "use client"
+
 import { AppDispatch, RootState } from '@/redux/store'
 import { ArrowUpTrayIcon, ChartBarIcon, ChatBubbleLeftEllipsisIcon, ChatBubbleOvalLeftEllipsisIcon, HeartIcon } from '@heroicons/react/24/outline'
 import { DocumentData, Timestamp } from 'firebase/firestore'
@@ -10,8 +11,8 @@ import { openCommentModal, setCommentDetails } from '@/redux/slices/modalSlices'
 import Link from 'next/link'
 
 interface PostProps {
-  data: DocumentData
-  id: string
+  data: DocumentData;
+  id: string;
 }
 export default function Post({ data, id  }: PostProps) {
   const user = useSelector((state: RootState) => state.user);

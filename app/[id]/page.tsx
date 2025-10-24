@@ -1,12 +1,54 @@
+import { PostHeader } from '@/components/Post'
 import Sidebar from '@/components/Sidebar'
 import SignUpPrompt from '@/components/SignUpPrompt'
 import Widgets from '@/components/Widgets'
+import { db } from '@/firebase'
 import { ArrowLeftIcon, ArrowUpTrayIcon, ChartBarIcon, ChatBubbleOvalLeftEllipsisIcon, EllipsisHorizontalIcon, HeartIcon } from '@heroicons/react/24/outline'
+import { doc, getDoc } from 'firebase/firestore'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 
-export default function page() {
+
+const fetchPostComment = async (id: string) => {
+  const postRef = doc(db, "posts", id)
+  
+  const postSnap = await getDoc(postRef)
+
+  return postSnap.data()
+
+  
+  // const postRef = doc(db, "posts", id)
+
+  //   const postSnap = await getDoc(postRef)
+  //   return postSnap.data()
+}
+
+
+interface PageProps {
+    params: {
+        id: string 
+    }
+}
+
+interface Comment {
+    name: string;
+    text: string;
+    username: string;
+}
+
+export default async function page({ params }: PageProps) {
+  console.log(params)
+  const { id } = params
+  const postComment =  await fetchPostComment(id)
+  console.log(postComment)
+
+
+    // const { id } = params 
+    // const postComment = await fetchPostComment(id)
+    // console.log(postComment)
+
+
   return (
     <>
     <div className="
@@ -39,7 +81,7 @@ export default function page() {
             flex 
 
             '>
-                <Link href="/ ">
+                <Link href="/"  >
                     <ArrowLeftIcon className='w-7 h-7 mr-3' />
                 </Link>
                 Bumble
@@ -64,7 +106,7 @@ export default function page() {
                         sm:max-w-[160p]
                         "
                   >
-                    name
+                    {postComment?.name}
                   </span>
                   <span
                     className="text-[#707E89] 
@@ -73,14 +115,14 @@ export default function page() {
                         sm:max-w-[160p]
                         "
                   >
-                    username
+                    {postComment?.username}
                   </span>
                 </div>
               </div>
 
               <EllipsisHorizontalIcon className="w-5 h-5" />
             </div>
-            <span className="text-[15px] ">text</span>
+            <span className="text-[15px] ">{postComment?.text}</span>
           </div>
 
 
@@ -115,6 +157,29 @@ export default function page() {
             />
           </div>
 
+          {/* {
+            postComment?.comments.map((comment: Comment) => (
+            <Comment
+            name={comment.name}
+            username={comment.username}
+            text={comment.text}
+            />))
+          } */}
+
+          {
+            postComment?.comments.map((comment:Comment) => (
+              <Comment
+              name={comment.name}
+              username={comment.username}
+              text={comment.text}
+              />
+
+            ))
+          }
+
+
+
+
 
 
 
@@ -128,14 +193,6 @@ export default function page() {
 
 
           </div>
-
-
-
-
-
-
-
-          
           <Widgets />
           
         </div>
@@ -143,4 +200,50 @@ export default function page() {
       
     </>
   )
+}
+
+
+
+
+
+
+
+
+
+
+interface CommentProps {
+    name: string;
+    username: string;
+    text: string;
+}
+
+function Comment({ name, username, text }: CommentProps) {
+  return (
+    <div className="border-b border-gray-300  ">
+      <PostHeader name={name} username={username} text={text} />
+
+      <div className="flex space-x-14 p-3 ms-16  ">
+        <ChatBubbleOvalLeftEllipsisIcon
+          className="w-[22px] h-[22px]
+             cursor-not-allowed 
+              "
+        />
+        <HeartIcon
+          className="w-[22px] h-[22px]
+             cursor-not-allowed 
+              "
+        />
+        <ChartBarIcon
+          className="w-[22px] h-[22px]
+             cursor-not-allowed 
+              "
+        />
+        <ArrowUpTrayIcon
+          className="w-[22px] h-[22px]
+             cursor-not-allowed 
+              "
+        />
+      </div>
+    </div>
+  );
 }
