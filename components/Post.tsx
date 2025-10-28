@@ -1,14 +1,16 @@
 "use client"
 
 import { AppDispatch, RootState } from '@/redux/store'
-import { ArrowUpTrayIcon, ChartBarIcon, ChatBubbleLeftEllipsisIcon, ChatBubbleOvalLeftEllipsisIcon, HeartIcon } from '@heroicons/react/24/outline'
-import { DocumentData, Timestamp } from 'firebase/firestore'
+import { ArrowUpTrayIcon, ChartBarIcon, ChatBubbleOvalLeftEllipsisIcon, HeartIcon } from '@heroicons/react/24/outline';
+import { HeartIcon as HeartSolidIcon } from '@heroicons/react/24/solid';
+import { arrayRemove, arrayUnion, doc, DocumentData, Timestamp, updateDoc } from 'firebase/firestore'
 import Image from 'next/image'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import Moment  from 'react-moment';
 import { openCommentModal, setCommentDetails } from '@/redux/slices/modalSlices'
 import Link from 'next/link'
+import { db } from '@/firebase'
 
 interface PostProps {
   data: DocumentData;
@@ -17,6 +19,25 @@ interface PostProps {
 export default function Post({ data, id  }: PostProps) {
   const user = useSelector((state: RootState) => state.user);
   const dispatch: AppDispatch = useDispatch();
+
+
+  async function likePost() {
+    const postRef = doc(db, "posts", id)
+
+    if (data.likes.includes(user.uid)) {
+      await updateDoc(postRef, {
+        likes: arrayRemove(user.uid)
+      })
+    } else {
+
+      await updateDoc(postRef, {
+        likes: arrayUnion(user.uid)
+      })
+
+    }
+
+
+  }
 
   return (
     <>
@@ -58,19 +79,53 @@ export default function Post({ data, id  }: PostProps) {
           }
           }
           />
-          <span className='absolute text-xs top-0 -right-3 '>
-            2
-          </span>
+          {
+            data.comments.length > 0 && (
+
+              <span className='absolute text-xs top-0 -right-3 '>
+                {data.comments.length}
+              </span>
+
+            )
+          }
         </div>
 
         <div className='relative '>
-          <HeartIcon className='
-          w-5 h-5  cursor-pointer
-          hover:text-pink-500 transition 
-          '/>
-          <span className='absolute text-xs top-0 -right-3 '>
-            2
-          </span>
+
+          {
+            data.likes.includes(user.uid) ?
+
+            <HeartSolidIcon className='
+            w-5 h-5  cursor-pointer
+            text-pink-500 
+            '
+            onClick={() => likePost()}
+            />
+            :
+
+
+              <HeartIcon className='
+              w-5 h-5  cursor-pointer
+              hover:text-pink-500 transition 
+              '
+              onClick={() => likePost()}
+    
+              />
+
+          }
+
+          {
+            data.likes.length > 0 && (
+
+            <span className='absolute text-xs top-0 -right-3 '>
+              {data.likes.length}
+            </span>
+
+            )
+          }
+
+
+
         </div>
 
         <div className='relative '>
