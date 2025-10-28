@@ -8,7 +8,7 @@ import Image from 'next/image'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import Moment  from 'react-moment';
-import { openCommentModal, setCommentDetails } from '@/redux/slices/modalSlices'
+import { openCommentModal, openLogInModal, setCommentDetails } from '@/redux/slices/modalSlices'
 import Link from 'next/link'
 import { db } from '@/firebase'
 
@@ -22,6 +22,11 @@ export default function Post({ data, id  }: PostProps) {
 
 
   async function likePost() {
+    if (!user.username) {
+                  dispatch(openLogInModal())
+                  return;
+                }
+
     const postRef = doc(db, "posts", id)
 
     if (data.likes.includes(user.uid)) {
@@ -67,6 +72,13 @@ export default function Post({ data, id  }: PostProps) {
           hover:text-[#f4af01] transition 
           '
           onClick={() => {
+
+            if (!user.username) {
+                  dispatch(openLogInModal())
+                  return;
+                }
+
+                
 
             dispatch(setCommentDetails({
               name: data.name,
